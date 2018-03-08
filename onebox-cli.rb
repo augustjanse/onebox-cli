@@ -25,8 +25,10 @@ unless File.exist?('style.css')
   system("wget #{common}/foundation/colors.scss -P #{tmp}")
   system("wget #{common}/foundation/variables.scss -P #{tmp}")
 
+  # Onebox Sass, append everything here
   scss = File.open("#{tmp}/onebox.scss", 'a')
 
+  # Just post-aside mix-in block
   File.open("#{tmp}/mixins.scss") do |f|
     block_opened = false
     f.each do |line|
@@ -41,6 +43,27 @@ unless File.exist?('style.css')
       end
     end
   end
+
+  # All lines
+  File.open("#{tmp}/colors.scss") do |f|
+    f.each do |line|
+      scss.puts line
+    end
+  end
+
+  # Everything but injected sheets
+  File.open("#{tmp}/variables.scss") do |f|
+    f.each do |line|
+      unless line.include?('@import')
+        scss.puts line
+      end
+    end
+  end
+
+  # Discourse-looking font
+  scss.puts('aside, aside * {
+      font-family: Helvetica, Arial, sans-serif;
+  }')
 end
 
 Onebox.options.load_paths.push(File.join(File.dirname(__FILE__), "discourse-musicbrainz-onebox/templates"))
