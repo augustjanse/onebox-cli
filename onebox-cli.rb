@@ -26,8 +26,24 @@ unless File.exist?('style.css')
   system("wget #{common}/foundation/variables.scss -P #{tmp}")
   system("wget https://raw.githubusercontent.com/phw/discourse-musicbrainz-onebox/master/assets/stylesheets/musicbrainz.scss -P #{tmp}")
 
-  # Onebox Sass, append everything here
-  scss = File.open("#{tmp}/onebox.scss", 'a')
+  # Append everything here
+  scss = File.open("#{tmp}/out.scss", 'a')
+
+  # All lines
+  File.open("#{tmp}/colors.scss") do |f|
+    f.each do |line|
+      scss.puts line
+    end
+  end
+
+  # Everything but injected sheets
+  File.open("#{tmp}/variables.scss") do |f|
+    f.each do |line|
+      unless line.include?('@import')
+        scss.puts line
+      end
+    end
+  end
 
   # Just post-aside mix-in block
   File.open("#{tmp}/mixins.scss") do |f|
@@ -46,18 +62,9 @@ unless File.exist?('style.css')
   end
 
   # All lines
-  File.open("#{tmp}/colors.scss") do |f|
+  File.open("#{tmp}/onebox.scss") do |f|
     f.each do |line|
       scss.puts line
-    end
-  end
-
-  # Everything but injected sheets
-  File.open("#{tmp}/variables.scss") do |f|
-    f.each do |line|
-      unless line.include?('@import')
-        scss.puts line
-      end
     end
   end
 
