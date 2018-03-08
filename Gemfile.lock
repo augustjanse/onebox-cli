@@ -1,0 +1,33 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    crass (1.0.3)
+    htmlentities (4.3.4)
+    mini_portile2 (2.3.0)
+    moneta (1.0.0)
+    multi_json (1.13.1)
+    mustache (1.0.5)
+    nokogiri (1.8.2)
+      mini_portile2 (~> 2.3.0)
+    nokogumbo (1.5.0)
+      nokogiri
+    onebox (1.8.42)
+      htmlentities (~> 4.3)
+      moneta (~> 1.0)
+      multi_json (~> 1.11)
+      mustache
+      nokogiri (~> 1.7)
+      sanitize
+    sanitize (4.6.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.4.4)
+      nokogumbo (~> 1.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  onebox
+
+BUNDLED WITH
+   1.16.1
