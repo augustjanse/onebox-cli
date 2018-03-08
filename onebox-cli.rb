@@ -24,6 +24,23 @@ unless File.exist?('style.css')
   system("wget #{common}/foundation/mixins.scss -P #{tmp}")
   system("wget #{common}/foundation/colors.scss -P #{tmp}")
   system("wget #{common}/foundation/variables.scss -P #{tmp}")
+
+  scss = File.open("#{tmp}/onebox.scss", 'a')
+
+  File.open("#{tmp}/mixins.scss") do |f|
+    block_opened = false
+    f.each do |line|
+      if !block_opened && line.include?('@mixin post-aside {')
+        scss.puts line
+        block_opened = true
+      elsif block_opened && !line.include?('}')
+        scss.puts line
+      elsif block_opened && line.include?('}')
+        scss.puts line
+        break
+      end
+    end
+  end
 end
 
 Onebox.options.load_paths.push(File.join(File.dirname(__FILE__), "discourse-musicbrainz-onebox/templates"))
