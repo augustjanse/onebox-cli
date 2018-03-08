@@ -15,6 +15,17 @@ require "onebox"
   end
 end
 
+unless File.exist?('style.css')
+  common = 'https://raw.githubusercontent.com/discourse/discourse/master/app/assets/stylesheets/common/' # Prefix
+  tmp = '/tmp/style/'
+
+  system("rm /tmp/style/*")
+  system("wget #{common}/base/onebox.scss -P #{tmp}")
+  system("wget #{common}/foundation/mixins.scss -P #{tmp}")
+  system("wget #{common}/foundation/colors.scss -P #{tmp}")
+  system("wget #{common}/foundation/variables.scss -P #{tmp}")
+end
+
 Onebox.options.load_paths.push(File.join(File.dirname(__FILE__), "discourse-musicbrainz-onebox/templates"))
 url = "https://musicbrainz.org/artist/79ba6a62-037c-4f16-bbf3-8fe8b363451b"
 preview = Onebox.preview(url)
