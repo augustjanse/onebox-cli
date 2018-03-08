@@ -24,6 +24,7 @@ unless File.exist?('style.css')
   system("wget #{common}/foundation/mixins.scss -P #{tmp}")
   system("wget #{common}/foundation/colors.scss -P #{tmp}")
   system("wget #{common}/foundation/variables.scss -P #{tmp}")
+  system("wget https://raw.githubusercontent.com/phw/discourse-musicbrainz-onebox/master/assets/stylesheets/musicbrainz.scss -P #{tmp}")
 
   # Onebox Sass, append everything here
   scss = File.open("#{tmp}/onebox.scss", 'a')
@@ -57,6 +58,13 @@ unless File.exist?('style.css')
       unless line.include?('@import')
         scss.puts line
       end
+    end
+  end
+
+  # All lines
+  File.open("#{tmp}/musicbrainz.scss") do |f|
+    f.each do |line|
+      scss.puts line
     end
   end
 
