@@ -1,0 +1,10 @@
+// Could be changed to another path if you wanted to host the icons yourself
+@function image-url ($relative-path) {
+  $absolute-path: "https://github.com/discourse/discourse/raw/master/app/assets/images/" + $relative-path;
+  @return url($absolute-path);
+}
+
+// Deprecated, which is probably bad. Also hard codes all url() calls to the MB favicon.
+@function url ($path) {
+  @return url(https://github.com/phw/discourse-musicbrainz-onebox/raw/master/public/images/musicbrainz.png);
+}

@@ -17,6 +17,7 @@ def compile_css
   transfer_excluding_lines("#{tmp}/variables.scss", scss, '@import') # Everything but injected sheets
   transfer_block("#{tmp}/mixins.scss", scss, '@mixin post-aside {') # Just post-aside mix-in block
   transfer_block("#{tmp}/math.scss", scss) # Just sqrt function block
+  transfer_block('url-functions.scss', scss) # Just sqrt function block
   transfer_block("#{tmp}/onebox.scss", scss) # All lines
   transfer_block("#{tmp}/musicbrainz.scss", scss) # All lines
 
