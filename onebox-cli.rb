@@ -1,5 +1,6 @@
 require "onebox"
 require_relative "helpers"
+require "sass"
 
 2.times do
   begin
@@ -40,6 +41,9 @@ unless File.exist?('style.css')
   scss.puts('aside, aside * {
       font-family: Helvetica, Arial, sans-serif;
   }')
+
+  scss.flush
+  File.write('style.css', Sass::Engine.new(File.read("#{tmp}/out.scss"), {:syntax => :scss}).render)
 end
 
 Onebox.options.load_paths.push(File.join(File.dirname(__FILE__), "discourse-musicbrainz-onebox/templates"))
