@@ -22,6 +22,4 @@ unless File.exist?('style.css')
 end
 
 Onebox.options.load_paths.push(File.join(File.dirname(__FILE__), "discourse-musicbrainz-onebox/templates"))
-url = "https://musicbrainz.org/artist/79ba6a62-037c-4f16-bbf3-8fe8b363451b"
-preview = Onebox.preview(url)
-puts preview.to_s #=> true
+puts Onebox.preview(ARGV[0])
