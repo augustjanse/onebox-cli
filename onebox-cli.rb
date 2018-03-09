@@ -1,4 +1,5 @@
 require "onebox"
+require_relative "helpers"
 
 2.times do
   begin
@@ -29,51 +30,11 @@ unless File.exist?('style.css')
   # Append everything here
   scss = File.open("#{tmp}/out.scss", 'a')
 
-  # All lines
-  File.open("#{tmp}/colors.scss") do |f|
-    f.each do |line|
-      scss.puts line
-    end
-  end
-
-  # Everything but injected sheets
-  File.open("#{tmp}/variables.scss") do |f|
-    f.each do |line|
-      unless line.include?('@import')
-        scss.puts line
-      end
-    end
-  end
-
-  # Just post-aside mix-in block
-  File.open("#{tmp}/mixins.scss") do |f|
-    block_opened = false
-    f.each do |line|
-      if !block_opened && line.include?('@mixin post-aside {')
-        scss.puts line
-        block_opened = true
-      elsif block_opened && !line.include?('}')
-        scss.puts line
-      elsif block_opened && line.include?('}')
-        scss.puts line
-        break
-      end
-    end
-  end
-
-  # All lines
-  File.open("#{tmp}/onebox.scss") do |f|
-    f.each do |line|
-      scss.puts line
-    end
-  end
-
-  # All lines
-  File.open("#{tmp}/musicbrainz.scss") do |f|
-    f.each do |line|
-      scss.puts line
-    end
-  end
+  transfer_block("#{tmp}/colors.scss", scss) # All lines
+  transfer_excluding_lines("#{tmp}/variables.scss", scss, '@import') # Everything but injected sheets
+  transfer_block("#{tmp}/mixins.scss", scss, '@mixin post-aside {') # Just post-aside mix-in block
+  transfer_block("#{tmp}/onebox.scss", scss) # All lines
+  transfer_block("#{tmp}/musicbrainz.scss", scss) # All lines
 
   # Discourse-looking font
   scss.puts('aside, aside * {
