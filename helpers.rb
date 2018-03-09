@@ -21,7 +21,7 @@ def compile_css
   transfer_block("#{tmp}/musicbrainz.scss", scss) # All lines
 
   # Discourse-looking font
-  scss.puts('aside, aside * {
+  scss.puts('aside.onebox, aside.onebox * {
       font-family: Helvetica, Arial, sans-serif;
   }')
 
