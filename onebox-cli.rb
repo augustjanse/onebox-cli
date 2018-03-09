@@ -16,8 +16,8 @@ require "onebox"
 end
 
 unless File.exist?('style.css')
-  common = 'https://raw.githubusercontent.com/discourse/discourse/master/app/assets/stylesheets/common/' # Prefix
-  tmp = '/tmp/style/'
+  common = 'https://raw.githubusercontent.com/discourse/discourse/master/app/assets/stylesheets/common' # Prefix
+  tmp = '/tmp/style'
 
   system("rm /tmp/style/*")
   system("wget #{common}/base/onebox.scss -P #{tmp}")
