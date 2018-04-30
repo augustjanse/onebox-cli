@@ -103,7 +103,16 @@ def batch(path, spacing = false)
   re = Regexp.new('^http.*$').freeze
   lines = IO.readlines(path).map do |line|
     if re.match?(line)
-      box_string = Onebox.preview(line.strip).to_s
+      box_string = nil
+      loop do
+        begin
+          box_string = Onebox.preview(line.strip).to_s
+          break
+        rescue NameError
+          puts "Too many requests (probably), sleeping a few seconds"
+          sleep(5)
+        end
+      end
 
       if spacing
         "<br/><br/><br/>" + box_string
