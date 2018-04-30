@@ -98,4 +98,25 @@ end
 
 set_up
 
+# Replace all lines containing only a link with a Onebox of the link. If spacing, additionally add three <br/> before the Onebox.
+def batch(path, spacing = false)
+  re = Regexp.new('^http.*$').freeze
+  lines = IO.readlines(path).map do |line|
+    if re.match?(line)
+      box_string = Onebox.preview(line.strip).to_s
+
+      if spacing
+        "<br/><br/><br/>" + box_string
+      else
+        box_string
+      end
+    else
+      line
+    end
+  end
+  File.open(path, 'w') do |file|
+    file.puts lines
+  end
+end
+
 puts Onebox.preview(ARGV[0])
