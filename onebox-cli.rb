@@ -119,4 +119,8 @@ def batch(path, spacing = false)
   end
 end
 
-puts Onebox.preview(ARGV[0])
+if ARGV[0] == '-b'
+  batch(ARGV[1], true)
+else
+  puts Onebox.preview(ARGV[0])
+end
